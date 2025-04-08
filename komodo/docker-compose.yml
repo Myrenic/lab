@@ -6,8 +6,8 @@ services:
     command: --quiet --wiredTigerCacheSizeGB 0.25
     restart: unless-stopped
     volumes:
-      - /mnt/user/appdata/komodo/mongo/db:/data/db
-      - /mnt/user/appdata/komodo/mongo/config:/data/configdb
+      - komodo_mongo_db:/data/db
+      - komodo_mongo_config:/data/configdb
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${KOMODO_DB_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${KOMODO_DB_PASSWORD}
@@ -47,10 +47,12 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - /proc:/proc
       - ${PERIPHERY_ROOT_DIRECTORY:-/etc/komodo}:${PERIPHERY_ROOT_DIRECTORY:-/etc/komodo}
-      ## Custom location for docker compose repo
-      - /mnt/user/compose:/mnt/user/compose
+      - komodo_compose:/mnt/user/compose
     labels:
       komodo.skip: 
 
 volumes:
   core_repos:
+  komodo_mongo_db:
+  komodo_mongo_config:
+  komodo_compose:
